@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+      - 28017:28017
+
+  backend:
+    build: ./backend/.
+    container_name: backend
+    ports:
+      - 8000:3333
+    restart: always
+    depends_on:
+      - mongodb
+    environment:
+      - DB_CONNECT=mongodb://mongodb:27017/mydb
+      - PORT=3333
+
+  frontend:
+    build: ./frontend/.
+    container_name: frontend
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
