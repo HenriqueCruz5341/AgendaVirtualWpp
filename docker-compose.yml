@@ -20,3 +20,12 @@ services:
     environment:
       - DB_CONNECT=mongodb://mongodb:27017/mydb
       - PORT=3333
+
+  frontend:
+    build: ./frontend/.
+    container_name: frontend
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
